@@ -146,7 +146,6 @@ function addOverhang(x, z, width, depth) {
 }
 
 function generateBox(x, y, z, width, depth, falls) {
-  // ThreeJS
   const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
   const color = new THREE.Color(`white`);
   const material = new THREE.MeshLambertMaterial({ color });
@@ -251,7 +250,7 @@ function animation(time) {
   if (lastTime) {
     const timePassed = time - lastTime;
     const speed = 0.01;
-
+    
     const topLayer = stack[stack.length - 1];
     const previousLayer = stack[stack.length - 2];
 
@@ -264,11 +263,16 @@ function animation(time) {
               robotPrecision));
 
     if (boxShouldMove) {
-      
       topLayer.threejs.position[topLayer.direction] += speed * timePassed;
       topLayer.cannonjs.position[topLayer.direction] += speed * timePassed;
+      /*for(let layer of stack){
+              if(layer.threejs){
+                  layer.threejs.position.copy(layer.cannonjs.position);
+                  layer.threejs.quaternion.copy(layer.cannonjs.quaternion);    
+              }
+      }
+      */
 
-      
       if (topLayer.threejs.position[topLayer.direction] > 10) {
         missedTheSpot();
       }
